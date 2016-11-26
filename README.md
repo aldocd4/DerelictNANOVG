@@ -21,23 +21,22 @@ You need a valid GL3 context to use nanovg (I will add nvgCreateGL2 and GLes lat
 You just need to create a NVGContext :
 
 ```d
-    DerelictGL3.reload();
-    DerelictNANOVG.load();
+DerelictGL3.reload();
+DerelictNANOVG.load();
 
-    auto nvg = nvgCreateGL3(NVGcreateFlags.NVG_STENCIL_STROKES | NVGcreateFlags.NVG_DEBUG);
+auto nvg = nvgCreateGL3(NVGcreateFlags.NVG_STENCIL_STROKES | NVGcreateFlags.NVG_DEBUG);
 
-    // You can now draw something
-    while(gameAlive)
+// You can now draw something
+while(gameAlive)
+{
+    ///...
+
+    nvgBeginFrame(nvg, ...);
     {
-        ///...
-
-        nvgBeginFrame(nvg, ...);
-        {
-            drawWindow(nvg, ...);
-        }
-        nvgEndFrame(nvg);
-
-        ///..
+        drawWindow(nvg, ...);
     }
+    nvgEndFrame(nvg);
 
+    ///..
+}
 ```
