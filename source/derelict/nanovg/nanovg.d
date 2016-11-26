@@ -25,6 +25,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
 */
+
+/*
+ Original Source(NanoVG):
+ Copyright (c) 2013 Mikko Mononen memon@inside.org
+*/
+
 module derelict.nanovg.nanovg;
 
 public
