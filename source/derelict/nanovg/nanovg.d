@@ -60,7 +60,26 @@ class DerelictNANOVGLoader : SharedLibLoader
 
     protected override void loadSymbols()
     {
-        bindFunc(cast(void**)&nvgCreateGL3, "nvgCreateGL3");
+        version(NanovgGL2)
+        {
+            bindFunc(cast(void**)&nvgCreateGL2, "nvgCreateGL2");
+            bindFunc(cast(void**)&nvgDeleteGL2, "nvgDeleteGL2");
+            bindFunc(cast(void**)&nvglImageHandleGL2, "nvglImageHandleGL2");
+        }
+        else version(NanovgGL3)
+        {
+            bindFunc(cast(void**)&nvgCreateGL3, "nvgCreateGL3");
+            bindFunc(cast(void**)&nvgDeleteGL3, "nvgDeleteGL3");
+            bindFunc(cast(void**)&nvglCreateImageFromHandleGL3, "nvglCreateImageFromHandleGL3");
+            bindFunc(cast(void**)&nvglImageHandleGL3, "nvglImageHandleGL3");
+        }
+        else version(NanovgGLES2)
+        {
+            bindFunc(cast(void**)&nvgCreateGLES2, "nvgCreateGLES2");
+            bindFunc(cast(void**)&nvgDeleteGLES2, "nvgDeleteGLES2");
+            bindFunc(cast(void**)&nvglCreateImageFromHandleGLES2, "nvglCreateImageFromHandleGLES2");
+        }
+        
         bindFunc(cast(void**)&nvgBeginFrame, "nvgBeginFrame");
         bindFunc(cast(void**)&nvgCancelFrame, "nvgCancelFrame");
         bindFunc(cast(void**)&nvgEndFrame, "nvgEndFrame");

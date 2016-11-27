@@ -37,9 +37,28 @@ private
     import derelict.nanovg.types;
 }
 
-extern(C) @nogc 
+extern(C) nothrow @nogc 
 {
-    alias da_nvgCreateGL3 = NVGcontext* function(int flags);
+    version(NanovgGL2)
+    {
+        alias da_nvgCreateGL2 = NVGcontext* function(int flags);
+        alias da_nvgDeleteGL2 = void function(NVGcontext* ctx);
+        alias da_nvglImageHandleGL2 = uint function(NVGcontext* ctx, int image);
+    }
+    else version(NanovgGL3)
+    {
+        alias da_nvgCreateGL3 = NVGcontext* function(int flags);
+        alias da_nvgDeleteGL3 = void function(NVGcontext* ctx);
+        alias da_nvglCreateImageFromHandleGL3 = int function(NVGcontext* ctx, uint textureId, int w, int h, int flags);
+        alias da_nvglImageHandleGL3 = uint function(NVGcontext* ctx, int image);
+    }
+    else version(NanovgGLES2)
+    {
+        alias da_nvgCreateGLES2 = NVGcontext* function(int flags);
+        alias da_nvgDeleteGLES2 = void function(NVGcontext* ctx);
+        alias da_nvglCreateImageFromHandleGLES2 = int function(NVGcontext* ctx, uint textureId, int w, int h, int flags);
+    }
+
     alias da_nvgBeginFrame = void function(NVGcontext* ctx, int windowWidth, int windowHeight, float devicePixelRatio);
     alias da_nvgCancelFrame = void function(NVGcontext* ctx);
     alias da_nvgEndFrame = void function(NVGcontext* ctx);
@@ -87,7 +106,7 @@ extern(C) @nogc
     alias da_nvgTransformPoint = void function(float* dstx, float* dsty, const float* xform, float srcx, float srcy);
     alias da_nvgDegToRad = float function(float deg);
     alias da_nvgRadToDeg = float function(float rad);
-    alias da_nvgCreateImage = int function(NVGcontext* ctx, const char* filename, int imageFlags);
+    alias da_nvgCreateImage = int function(NVGcontext* ctx, const(char*) filename, int imageFlags);
     alias da_nvgCreateImageMem = int function(NVGcontext* ctx, int imageFlags, ubyte* data, int ndata);
     alias da_nvgCreateImageRGBA = int function(NVGcontext* ctx, int w, int h, int imageFlags, const ubyte* data);
     alias da_nvgUpdateImage = void function(NVGcontext* ctx, int image, const ubyte* data);
@@ -116,25 +135,25 @@ extern(C) @nogc
     alias da_nvgCircle = void function(NVGcontext* ctx, float cx, float cy, float r);
     alias da_nvgFill = void function(NVGcontext* ctx);
     alias da_nvgStroke = void function(NVGcontext* ctx);
-    alias da_nvgCreateFont = int function(NVGcontext* ctx, const char* name, const char* filename);
-    alias da_nvgCreateFontMem = int function(NVGcontext* ctx, const char* name, ubyte* data, int ndata, int freeData);
-    alias da_nvgFindFont = int function(NVGcontext* ctx, const char* name);
+    alias da_nvgCreateFont = int function(NVGcontext* ctx, const(char*) name, const(char*) filename);
+    alias da_nvgCreateFontMem = int function(NVGcontext* ctx, const(char*) name, ubyte* data, int ndata, int freeData);
+    alias da_nvgFindFont = int function(NVGcontext* ctx, const(char*) name);
     alias da_nvgAddFallbackFontId = int function(NVGcontext* ctx, int baseFont, int fallbackFont);
-    alias da_nvgAddFallbackFont = int function(NVGcontext* ctx, const char* baseFont, const char* fallbackFont);
+    alias da_nvgAddFallbackFont = int function(NVGcontext* ctx, const(char*) baseFont, const(char*) fallbackFont);
     alias da_nvgFontSize = void function(NVGcontext* ctx, float size);
     alias da_nvgFontBlur = void function(NVGcontext* ctx, float blur);
     alias da_nvgTextLetterSpacing = void function(NVGcontext* ctx, float spacing);
     alias da_nvgTextLineHeight = void function(NVGcontext* ctx, float lineHeight);
     alias da_nvgTextAlign = void function(NVGcontext* ctx, int _align);
     alias da_nvgFontFaceId = void function(NVGcontext* ctx, int font);
-    alias da_nvgFontFace = void function(NVGcontext* ctx, const char* font);
-    alias da_nvgText = float function(NVGcontext* ctx, float x, float y, const char* string, const char* end);
-    alias da_nvgTextBox = void function(NVGcontext* ctx, float x, float y, float breakRowWidth, const char* string, const char* end);
-    alias da_nvgTextBounds = float function(NVGcontext* ctx, float x, float y, const char* string, const char* end, float* bounds);
-    alias da_nvgTextBoxBounds = void function(NVGcontext* ctx, float x, float y, float breakRowWidth, const char* string, const char* end, float* bounds);
-    alias da_nvgTextGlyphPositions = int function(NVGcontext* ctx, float x, float y, const char* string, const char* end, NVGglyphPosition* positions, int maxPositions);
+    alias da_nvgFontFace = void function(NVGcontext* ctx, const(char*) font);
+    alias da_nvgText = float function(NVGcontext* ctx, float x, float y, const(char*) str, const(char*) end);
+    alias da_nvgTextBox = void function(NVGcontext* ctx, float x, float y, float breakRowWidth, const(char*) str, const(char*) end);
+    alias da_nvgTextBounds = float function(NVGcontext* ctx, float x, float y, const(char*) str, const(char*) end, float* bounds);
+    alias da_nvgTextBoxBounds = void function(NVGcontext* ctx, float x, float y, float breakRowWidth, const(char*) str, const(char*) end, float* bounds);
+    alias da_nvgTextGlyphPositions = int function(NVGcontext* ctx, float x, float y, const(char*) str, const(char*) end, NVGglyphPosition* positions, int maxPositions);
     alias da_nvgTextMetrics = void function(NVGcontext* ctx, float* ascender, float* descender, float* lineh);
-    alias da_nvgTextBreakLines = int function(NVGcontext* ctx, const char* string, const char* end, float breakRowWidth, NVGtextRow* rows, int maxRows);
+    alias da_nvgTextBreakLines = int function(NVGcontext* ctx, const(char*) str, const(char*) end, float breakRowWidth, NVGtextRow* rows, int maxRows);
     alias da_nvgCreateInternal = NVGcontext* function(NVGparams* params);
     alias da_nvgDeleteInternal = void function(NVGcontext* ctx);
     alias da_nvgInternalParams = NVGparams* function(NVGcontext* ctx);
@@ -143,7 +162,26 @@ extern(C) @nogc
 
 __gshared 
 {
-    da_nvgCreateGL3 nvgCreateGL3;
+    version(NanovgGL2)
+    {
+        da_nvgCreateGL2 nvgCreateGL2;
+        da_nvgDeleteGL2 nvgDeleteGL2;
+        da_nvglImageHandleGL2 nvglImageHandleGL2;
+    }
+    else version(NanovgGL3)
+    {
+        da_nvgCreateGL3 nvgCreateGL3;
+        da_nvgDeleteGL3 nvgDeleteGL3;
+        da_nvglCreateImageFromHandleGL3 nvglCreateImageFromHandleGL3;
+        da_nvglImageHandleGL3 nvglImageHandleGL3;
+    }
+    else version(NanovglGLES2)
+    {
+        da_nvgCreateGLES2 nvgCreateGLES2;
+        da_nvgDeleteGLES2 nvgDeleteGLES2;
+        da_nvglCreateImageFromHandleGLES2 nvglCreateImageFromHandleGLES2;
+    }
+    
     da_nvgBeginFrame nvgBeginFrame;
     da_nvgCancelFrame nvgCancelFrame;
     da_nvgEndFrame nvgEndFrame;

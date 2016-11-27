@@ -13,12 +13,41 @@ DerelictNANOVG
 
 Dynamic bindings to the nanovg library for the D programming language.
 
+Thanks to Mike Parker for Derelict !
+
+https://github.com/DerelictOrg
+
 How to use
 ======
 
-You need a valid GL3 context to use nanovg (I will add nvgCreateGL2 and GLes later !);
+NanoVG has 3 backends : GL2, GL3 and GLES2 
+You need to compile NanoVG with the backend you want to use :
 
-You just need to create a NVGContext :
+```d
+#define NANOVG_GL3_IMPLEMENTATION   // Use GL3 implementation.
+```
+
+More info at : https://github.com/memononen/nanovg
+
+When you compile your D project, you need to specify the backend you want to use :
+
+- NanovgGL2
+- NanovgGL3
+- NanovgGLES2
+
+Example with dub : dub.json :
+
+```json
+{
+    ///...
+
+	"versions":["NanovgGL3"],
+
+    ///...
+}
+```
+
+Finally, you just need to create a NVGContext :
 
 ```d
 DerelictGL3.reload();
@@ -26,11 +55,11 @@ DerelictNANOVG.load();
 
 auto nvg = nvgCreateGL3(NVGcreateFlags.NVG_STENCIL_STROKES | NVGcreateFlags.NVG_DEBUG);
 
-// You can now draw something
 while(gameAlive)
 {
     ///...
 
+    // You can draw something
     nvgBeginFrame(nvg, ...);
     {
         drawWindow(nvg, ...);
@@ -39,4 +68,7 @@ while(gameAlive)
 
     ///..
 }
+
+nvgDeleteGL3(nvg);
+
 ```

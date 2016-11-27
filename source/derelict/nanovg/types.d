@@ -1,5 +1,7 @@
 module derelict.nanovg.types;
 
+enum NVG_PI =  3.14159265358979323846264338327f;
+
 enum NVGcreateFlags 
 {
 	// Flag indicating if geometry based anti-aliasing is used (may not be needed when using MSAA).
