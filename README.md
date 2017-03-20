@@ -27,7 +27,7 @@ You need to compile NanoVG with the backend you want to use :
 #define NANOVG_GL3_IMPLEMENTATION   // Use GL3 implementation.
 ```
 
-More info at : https://github.com/memononen/nanovg
+More info at : https://github.com/memononen/nanovg#creating-drawing-context
 
 When you compile your D project, you need to specify the backend you want to use :
 
