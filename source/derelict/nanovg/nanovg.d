@@ -48,7 +48,7 @@ private
     static if(Derelict_OS_Windows)
         enum libNames = "nanovg.dll";
     else
-        static assert(0, "Need to implement PostgreSQL libNames for this operating system.");
+        static assert(0, "Need to implement NanoVG libNames for this operating system.");
 }
 
 class DerelictNANOVGLoader : SharedLibLoader 

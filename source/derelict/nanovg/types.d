@@ -65,7 +65,7 @@ struct NVGpaint
 
 struct NVGglyphPosition 
 {
-	const char* str;	// Position of the glyph in the input string.
+	char* str;	// Position of the glyph in the input string.
 	float x;			// The x-coordinate of the logical glyph position.
 	float minx, maxx;	// The bounds of the glyph shape.
 }
