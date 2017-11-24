@@ -3,7 +3,7 @@
 nanovg
 ======
 
-NanoVG is small antialiased vector graphics rendering library for OpenGL
+NanoVG is a small antialiased vector graphics rendering library for OpenGL
 
 Author : Mikko Mononen
 https://github.com/memononen/nanovg
@@ -59,7 +59,6 @@ while(gameAlive)
 {
     ///...
 
-    // You can draw something
     nvgBeginFrame(nvg, ...);
     {
         drawWindow(nvg, ...);
