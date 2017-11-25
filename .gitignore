@@ -1,3 +1,4 @@
 lib
 .dub
 dub.selections.json
+.vscode
