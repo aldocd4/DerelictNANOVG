@@ -19,7 +19,7 @@ https://github.com/DerelictOrg
 How to use
 ======
 
-NanoVG has 3 backends : GL2, GL3 and GLES2 
+NanoVG has 3 backends : GL2, GL3 and GLES2.
 You need to compile nanovg (you can use nanovg_c directory for this, its the latest nanovg code ready to compile for D) with the backend you want to use.
 
 By default, nanovg_c uses GL3 implementation. You can update the file nanovg.c to change the implementation :
